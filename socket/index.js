@@ -32,6 +32,16 @@ io.on("connection",(socket)=>{
       text,
     });
   });
+  socket.on("addContact",({reciverId, senderId}) => {
+      const user = getUser(reciverId);
+      if(user)
+      io.to(user.socketId).emit("getContact",{
+        members: [
+          reciverId,
+          senderId,
+        ]
+      });
+  });
 
   //when disconnect
   socket.on("disconnect", () => {
